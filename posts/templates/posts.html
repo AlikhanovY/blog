@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+    <style>
+        .post-list {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .post-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .post-item h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .post-item p {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .post-item p strong {
+            color: #444;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        .no-posts {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="post-list">
+    {% for posts in post %}
+        <div class="post-item">
+            <h2>{{ posts.title }}</h2>
+            <p><strong>Author:</strong> {{ posts.author.user.username }}</p>
+            <p>{{ posts.content }}</p>
+        </div>
+    {% empty %}
+        <p class="no-posts">No posts available.</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>
