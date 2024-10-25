@@ -84,7 +84,7 @@
     </style>
 </head>
 <body>
-
+{% if user.is_authenticated %}
 <div class="profile-container">
     <h1>Hello, {{ user.first_name }}</h1>
 
@@ -108,6 +108,9 @@
         {% endif %}
     </div>
 </div>
+{% else %}
+    <h1> User is not authenticated</h1>
+{% endif %}
 
 </body>
 </html>

@@ -12,9 +12,12 @@ def login_user(request):
     if request.method == 'POST':
         form = ProfileLoginForm(data=request.POST)
         if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect(f'profile/{user.username}')
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            authentication = authenticate(request, username=username, password=password)
+            if authentication is not None:
+                login(request, authentication)
+                return redirect(f'profile/{authentication.username}')
         else:
             print(form.errors)  
             messages.error(request, 'Invalid login credentials.')
