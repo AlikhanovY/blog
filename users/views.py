@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from posts.models import Post
+from .models import Follow
 
 
 
@@ -46,6 +47,25 @@ def profile(request, user):
 def logout_view(request):
     logout(request)
     return redirect('users:login')
+
+
+@login_required
+def follow_user(request, user_id):
+    user_to_follow = get_object_or_404(User, id=user_id)
+    print(user_to_follow.username)
+    if not request.user.following.filter(id=user_id):
+        print(request.user.username)
+        Follow.objects.create(follower=request.user, following=user_to_follow)
+    return render(request, 'profile.html')
+
+
+@login_required
+def unfollow_user(request, user_id):
+    user_to_unfollow = get_object_or_404(User, id=user_id)
+    request.user.following.filter(id=user_id).delete()
+    return render(request, 'profile.html')
+
+
 
 
 
